@@ -9,6 +9,7 @@
 # 
 
 import re
+from datetime import date, timedelta
 
 class Sasi:
     """
@@ -233,24 +234,25 @@ class JavaneseDate:
     EPOCH_YEAR = 1867
 
     def __init__(self, tahun=1867, sasi=1, dina=1):
-         """ init javanese date. The default value is the first javanese date epoch (24 March 1936C or 1 Sura 1955J)         
+        """ init javanese date. The default value is the first javanese date epoch (24 March 1936C or 1 Sura 1955J)         
 
-            Parameters
-            ----------
-            tahun  : int, optional, tahun mean year in javanese              
-            sasi : int, optional, sasi mean month in javanese
-            dina  : int, optional, dina mean day in javanese             
+        Parameters
+        ----------
+        tahun  : int, optional, tahun mean year in javanese              
+        sasi : int, optional, sasi mean month in javanese
+        dina  : int, optional, dina mean day in javanese             
 
-            Returns
-            -------
-            JavaneseDate object                
-        """
+        Returns
+        -------
+        JavaneseDate object                
+         """
 
-        if (tahun >= 1867 and sasi >= 1, dina > -1):
+        if (tahun >= 1867 and sasi >= 1 and dina > -1):
             self.tahun = Tahun(tahun)
             self.sasi = Sasi(sasi)
             self.daysFromEpoch = self.getDaysFromEpoch(tahun, sasi, dina)
             self.dina = Dina(dina, self.daysFromEpoch)
+            
         else:
             raise Exception(
                 "Sorry, year must be later than 1867")
