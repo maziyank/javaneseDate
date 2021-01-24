@@ -110,8 +110,8 @@ class Tahun:
 
     def __init__(self, value=1):
         self.value = value
-        self.index = value % len(Tahun.values)
-        model = Tahun.values[self.index - 1]
+        self.index = (value - 1867) % len(Tahun.values)
+        model = Tahun.values[self.index]
         self.days = model.days
         self.name = model.name
 
