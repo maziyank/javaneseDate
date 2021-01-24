@@ -10,12 +10,12 @@ Reference : https://en.wikipedia.org/wiki/Javanese_calendar
 
 ```python
 
-## Initialize JavaneseDate
 import JavaneseDate
+
+## Initialize JavaneseDate
 date1 = JavaneseDate()
 
 ## Initialize JavaneseDate with specific date
-import JavaneseDate
 date1 = JavaneseDate(tahun=1867,sasi=3,dina=1).format()
   ## -> Jemah Pahing, 1 Mulud 1867 
 
