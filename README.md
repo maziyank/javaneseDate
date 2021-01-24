@@ -10,26 +10,26 @@ Reference : https://en.wikipedia.org/wiki/Javanese_calendar
 
 ```python
 
-import JavaneseDate
+import JavaneseDate as jd
 
 ## Initialize JavaneseDate
-date1 = JavaneseDate()
+date1 = jd.JavaneseDate()
 
 ## Initialize JavaneseDate with specific date
-date1 = JavaneseDate(tahun=1867,sasi=3,dina=1).format()
-  ## -> Jemah Pahing, 1 Mulud 1867 
+date1 = jd.JavaneseDate(tahun=1867,sasi=3,dina=1).format()
+  # -> Jemah Pahing, 1 Mulud 1867 
 
 ## Create JavaneseDate From Gregorian Date
-date1 = JavaneseDate().fromDate(year=2020, month=1, day=24).format()
-  ## -> Jemah Wage, 28 Jumadilawal 1953
+date1 = jd.JavaneseDate().fromDate(year=2020, month=1, day=24).format()
+  # -> Jemah Wage, 28 Jumadilawal 1953
   
 ## Convert JavaneseDate To Python DateTime Object
-date1 = JavaneseDate().toDate()
-  ## -> 1936-03-24
+date1 = jd.JavaneseDate().toDate()
+  # -> 1936-03-24
   
 ## Format Date
-date1 = JavaneseDate().format(dateformat='%D %P, %d %M %Y')
-  ## -> Selasa Pon, 1 Sura 1867 
+date1 = jd.JavaneseDate().format(dateformat='%D %P, %d %M %Y')
+  # -> Selasa Pon, 1 Sura 1867 
 
 ```
 
