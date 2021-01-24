@@ -8,32 +8,28 @@ Reference : https://en.wikipedia.org/wiki/Javanese_calendar
 
 ## Usage
 
-#### Initialize JavaneseDate
-```
+```python
+
+## Initialize JavaneseDate
+
 import JavaneseDate
 
 date1 = JavaneseDate()
 
-```
+## Create JavaneseDate From Gregorian Date
 
-#### Create JavaneseDate From Gregorian Date
-```
 import JavaneseDate
 
 date1 = JavaneseDate().fromDate(year=2020, month=1, day=24)
 
-```
+## Convert JavaneseDate To Python DateTime Object
 
-#### Convert JavaneseDate To Python DateTime Object
-```
 import JavaneseDate
 
 date1 = JavaneseDate().toDate()
 
-```
-
 ## Format Date
-```
+
 import JavaneseDate
 
 date1 = JavaneseDate().format(dateformat='%D %P, %d %M %Y')
@@ -42,9 +38,7 @@ date1 = JavaneseDate().format(dateformat='%D %P, %d %M %Y')
 ```
 
 ## Date Formatting
-```
-Format
-----------            
+```       
 %d: javanese day (dina) value
 
 %D: javanese day (dina) full name
