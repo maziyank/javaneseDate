@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import date, timedelta
 import re
 
 
@@ -127,7 +127,7 @@ class JavaneseDate:
     # EPOCH ASAPON, Tanggal Masehi: 24 Maret 1936, Selasa Anggara, Tanggal Jawa: 1 Suro 1867, Selasa Pon
     DAYS_IN_WINDU = 2835
     TAHUN_IN_WINDU = 8
-    GREGORIAN_EPOCH_DATE = datetime(1936, 3, 24)
+    GREGORIAN_EPOCH_DATE = date(1936, 3, 24)
     EPOCH_YEAR = 1867
 
     def __init__(self, tahun=1867, sasi=1, dina=1):
@@ -156,7 +156,7 @@ class JavaneseDate:
 
     def fromDate(self, year, month, day):
         dt0 = JavaneseDate.GREGORIAN_EPOCH_DATE
-        dt1 = datetime(year, month, day)
+        dt1 = date(year, month, day)
         delta = dt1 - dt0
         self.daysFromEpoch = delta.days + 1
 
@@ -190,3 +190,15 @@ class JavaneseDate:
                                                                     P=self.dina.pasaran.name,
                                                                     p=self.dina.pasaran.index
                                                                     )
+
+    def __add__(self, other):
+        if (type(other) is JavaneseDateDelta):
+            return self 
+        else:
+            return self 
+
+    def __sub__(self, other):
+        if (type(other) is JavaneseDateDelta):
+            return self 
+        else:
+            return self 
