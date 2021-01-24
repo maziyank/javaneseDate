@@ -11,27 +11,16 @@ Reference : https://en.wikipedia.org/wiki/Javanese_calendar
 ```python
 
 ## Initialize JavaneseDate
-
 import JavaneseDate
-
 date1 = JavaneseDate()
 
 ## Create JavaneseDate From Gregorian Date
-
-import JavaneseDate
-
 date1 = JavaneseDate().fromDate(year=2020, month=1, day=24)
 
 ## Convert JavaneseDate To Python DateTime Object
-
-import JavaneseDate
-
 date1 = JavaneseDate().toDate()
 
 ## Format Date
-
-import JavaneseDate
-
 date1 = JavaneseDate().format(dateformat='%D %P, %d %M %Y')
 // return Selasa Pon, 1 Sura 1867
 
