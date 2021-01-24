@@ -14,15 +14,22 @@ Reference : https://en.wikipedia.org/wiki/Javanese_calendar
 import JavaneseDate
 date1 = JavaneseDate()
 
-## Create JavaneseDate From Gregorian Date
-date1 = JavaneseDate().fromDate(year=2020, month=1, day=24)
+## Initialize JavaneseDate with specific date
+import JavaneseDate
+date1 = JavaneseDate(tahun=1867,sasi=3,dina=1).format()
+  ## -> Jemah Pahing, 1 Mulud 1867 
 
+## Create JavaneseDate From Gregorian Date
+date1 = JavaneseDate().fromDate(year=2020, month=1, day=24).format()
+  ## -> Jemah Wage, 28 Jumadilawal 1953
+  
 ## Convert JavaneseDate To Python DateTime Object
 date1 = JavaneseDate().toDate()
-
+  ## -> 1936-03-24
+  
 ## Format Date
 date1 = JavaneseDate().format(dateformat='%D %P, %d %M %Y')
-// return Selasa Pon, 1 Sura 1867
+  ## -> Selasa Pon, 1 Sura 1867 
 
 ```
 
