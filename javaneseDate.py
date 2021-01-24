@@ -131,13 +131,14 @@ class JavaneseDate:
     EPOCH_YEAR = 1867
 
     def __init__(self, tahun=1867, sasi=1, dina=1):
-        if (tahun >= 1867 and sasi>=1, dina>-1):
+        if (tahun >= 1867 and sasi >= 1, dina > -1):
             self.tahun = Tahun(tahun)
             self.sasi = Sasi(sasi)
             self.daysFromEpoch = self.getDaysFromEpoch(tahun, sasi, dina)
             self.dina = Dina(dina, self.daysFromEpoch)
         else:
-            raise Exception("Sorry, year must be later than 1867. Maaf tahun harus lebih dari 1867")
+            raise Exception(
+                "Sorry, year must be later than 1867")
 
     def getDaysFromEpoch(self, tahun, sasi, dina):
         winduCount = (
@@ -154,23 +155,29 @@ class JavaneseDate:
 
         return totalDays
 
-    def fromDate(self, year, month, day):
-        dt0 = JavaneseDate.GREGORIAN_EPOCH_DATE
-        dt1 = date(year, month, day)
-        delta = dt1 - dt0
-        self.daysFromEpoch = delta.days + 1
-
-        windu = delta.days // JavaneseDate.DAYS_IN_WINDU
-        tahun, sasi, days = 1, 1, delta.days % JavaneseDate.DAYS_IN_WINDU
+    def getDateFromEpoch(self, daysFromEpoch):
+        windu = daysFromEpoch // JavaneseDate.DAYS_IN_WINDU
+        tahun, sasi, days = 1, 1, daysFromEpoch % JavaneseDate.DAYS_IN_WINDU
+        
         while days > 355:
             days, tahun = days - Tahun.values[tahun].days, tahun + 1
         while days > 30:
             days, sasi = days - Sasi.values[sasi].days, sasi + 1
 
-        self.tahun = Tahun(JavaneseDate.EPOCH_YEAR - 1 + (windu * 8 + tahun))
-        self.sasi = Sasi(sasi)
-        self.pasaran = Pasaran(self.daysFromEpoch)
-        self.dina = Dina(days, self.daysFromEpoch)
+        tahun = Tahun(JavaneseDate.EPOCH_YEAR - 1 +
+                      (windu * JavaneseDate.TAHUN_IN_WINDU + tahun))
+        sasi = Sasi(sasi)
+        pasaran = Pasaran(self.daysFromEpoch)
+        dina = Dina(days, self.daysFromEpoch)        
+
+        return tahun, sasi, dina, pasaran
+
+    def fromDate(self, year, month, day):
+        dt0 = JavaneseDate.GREGORIAN_EPOCH_DATE
+        dt1 = date(year, month, day)
+        delta = dt1 - dt0
+        self.daysFromEpoch = delta.days + 1
+        self.tahun, self.sasi, self.dina , self.pasaran = self.getDateFromEpoch(self.daysFromEpoch)
 
         return self
 
@@ -191,14 +198,42 @@ class JavaneseDate:
                                                                     p=self.dina.pasaran.index
                                                                     )
 
+    def calculateDeltaDays(self, dt, multiplier = 1):
+        winduCount = (dt.tahun + dt.sasi //
+                      12) // JavaneseDate.TAHUN_IN_WINDU
+        tahunCount = (dt.tahun + dt.sasi //
+                      12) % JavaneseDate.TAHUN_IN_WINDU
+
+        totalDays = sum([
+            self.daysFromEpoch,
+            multiplier * winduCount * JavaneseDate.DAYS_IN_WINDU,
+            multiplier * sum(map(lambda x: x.days,
+                    Tahun.values[self.tahun.index + 1:self.tahun.index + tahunCount + 1])),
+            multiplier * sum(map(lambda x: x.days,
+                    Sasi.values[self.sasi.index + 1: (self.sasi.index + 1) + (dt.sasi % 12)])),
+            multiplier * dt.dina
+        ])
+
+        return totalDays
+
     def __add__(self, other):
         if (type(other) is JavaneseDateDelta):
-            return self 
+            totalDays = self.calculateDeltaDays(other, 1)
+            self.daysFromEpoch = totalDays
+            self.tahun, self.sasi, self.dina , self.pasaran = self.getDateFromEpoch(totalDays)
+            return self
         else:
-            return self 
+            return self
 
     def __sub__(self, other):
         if (type(other) is JavaneseDateDelta):
-            return self 
+            totalDays = self.calculateDeltaDays(other, -1)
+            if totalDays > 0:
+                self.daysFromEpoch = totalDays + 1
+                self.tahun, self.sasi, self.dina , self.pasaran = self.getDateFromEpoch(totalDays)
+            else:
+                raise Exception(
+                "Cant cant be performed because the resulted date will be earlier than 24 March 1936")
+            return self
         else:
-            return self 
+            return self
